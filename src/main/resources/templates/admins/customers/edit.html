@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/headerCommon :: head">
+  <meta charset="UTF-8">
+  <title>Add Claim</title>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <header th:replace="fragments/mainHeaderCommon::mainHeader" class="main-header">
+  </header>
+  <aside class="main-sidebar">
+    <section class="sidebar" th:replace="fragments/menuCommon::menu"></section>
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="col-8 p-15">
+                <h3 class="card-title" th:utext="${pageTitle}"></h3>
+                <h5 class="card-subtitle"><a th:href="@{'/dashboard'}">Dashboard</a> /
+                  <span th:utext="${pageTitle}"></span> /
+                  <span th:utext="${pageSubTitle}"></span>
+                </h5>
+              </div>
+            </div>
+          </div>
+          <form th:action="@{/customer/edit/{id} (id=${customers.id})}" method="POST" th:object="${customers}" role="form" enctype="multipart/form-data">
+            <p class="alert alert-error"
+               th:if="${#fields.hasGlobalErrors()}"
+               th:each="error : ${#fields.errors('global')}"
+               th:text="${error}">Validation error</p>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="box">
+                  <div class="box-body">
+                    <div class="box-header">
+                      <div class="col-md-12">
+                        <h3 class="card-title">New Customer's</h3>
+                      </div>
+                    </div>
+                    <div class="box-body">
+                      <input type="hidden" th:field="*{id}" />
+                      <div class="col-md-12">
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('customerName')}? 'has-error':''">
+                          <input type="text"
+                                 id="customerName"
+                                 name="containercode"
+                                 class="form-control"
+                                 th:field="*{customerName}"
+                                 autofocus="autofocus"
+                                 placeholder="Customer Name"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('address')}? 'has-error':''">
+                          <input type="text"
+                                 id="address"
+                                 name="address"
+                                 class="form-control"
+                                 th:field="*{address}"
+                                 autofocus="autofocus"
+                                 placeholder="Address"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('province')}? 'has-error':''">
+                          <input type="text"
+                                 id="province"
+                                 name="province"
+                                 class="form-control"
+                                 th:field="*{province}"
+                                 autofocus="autofocus"
+                                 placeholder="province"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('accountNumber')}? 'has-error':''">
+                          <input type="text"
+                                 id="accountNumber"
+                                 name="accountNumber"
+                                 class="form-control"
+                                 th:field="*{accountNumber}"
+                                 placeholder="accountNumber"/>
+                        </div>
+                        <div class="form-group col-md-12">
+                          <label class="form-label">Marking</label>
+                          <textarea class="form-control marking" id="marking" name="marking"
+                                    th:field="*{marking}"
+                                    placeholder="Marking"
+                                    rows="3" required maxlength="200"> </textarea>
+                          <p class="character-count"></p>
+                        </div>
+                        <div class="box-footer">
+                          <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+
+                </div>
+              </div>
+          </form>
+          <!-- /.col -->
+        </div>
+      </div>
+
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <div th:replace="fragments/footerCommon::footer" th:remove="tag"></div>
+</div>
+</body>
+
+</html>

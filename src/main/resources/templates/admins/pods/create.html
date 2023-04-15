@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/headerCommon :: head">
+  <meta charset="UTF-8">
+  <title>Add Claim</title>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <header th:replace="fragments/mainHeaderCommon::mainHeader" class="main-header">
+  </header>
+  <aside class="main-sidebar">
+    <section class="sidebar" th:replace="fragments/menuCommon::menu"></section>
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="col-8 p-15">
+                <h3 class="card-title" th:utext="${pageTitle}"></h3>
+                <h5 class="card-subtitle"><a th:href="@{'/dashboard'}">Dashboard</a> /
+                  <span th:utext="${pageTitle}"></span> /
+                  <span th:utext="${pageSubTitle}"></span>
+                </h5>
+              </div>
+            </div>
+          </div>
+          <form th:action="@{/pod/add}" method="POST" th:object="${podWrapperDTO}" role="form">
+            <p class="alert alert-error"
+               th:if="${#fields.hasGlobalErrors()}"
+               th:each="error : ${#fields.errors('global')}"
+               th:text="${error}">Validation error</p>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="box">
+                  <div class="box-body">
+                    <div class="box-header">
+                      <div class="col-md-12">
+                        <h3 class="card-title">New Proof Of Delivery</h3>
+                      </div>
+                    </div>
+                    <div class="box-body">
+                      <div class="col-md-12">
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('holder.containerCode')}? 'has-error':''">
+                          <select id="containerCode"
+                                  name="containercode"
+                                  class="form-control" th:field="*{holder.containerCode}">
+                            <option value="">-- Container Code --</option>
+                            <option th:each="stuffing : ${listContainerCode}"
+                                    th:value="${stuffing.containerCode}"
+                                    th:utext="${stuffing.containerCode}"/>
+                          </select>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('holder.receivingNumber')}? 'has-error':''">
+                          <input type="text"
+                                 id="receivingNumber"
+                                 name="receivingnumber"
+                                 class="form-control"
+                                 th:field="*{holder.receivingNumber}"
+                                 autofocus="autofocus"
+                                 placeholder="Receiving Number"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('holder.deliveryType')}? 'has-error':''">
+                          <input type="text"
+                                 id="deliveryType"
+                                 name="deliverytype"
+                                 class="form-control"
+                                 th:field="*{holder.deliveryType}"
+                                 autofocus="autofocus"
+                                 placeholder="Delivery Type"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12 date" data-provide="datepicker" th:classappend="${#fields.hasErrors('holder.deliveryDate')}? 'has-error':''">
+                          <input type="date"
+                                 id="deliveryDate"
+                                 name="deliverydate"
+                                 class="form-control"
+                                 th:field="*{holder.deliveryDate}"
+                                 autofocus="autofocus"
+                                 placeholder="delivery date"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12 date" data-provide="datepicker" th:classappend="${#fields.hasErrors('holder.receivingDate')}? 'has-error':''">
+                          <input type="date"
+                                 id="receivingDate"
+                                 name="receivingdate"
+                                 class="form-control"
+                                 th:field="*{holder.receivingDate}"
+                                 autofocus="autofocus"
+                                 placeholder="receiving date"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('holder.driverId')}? 'has-error':''">
+                          <select id="driverId"
+                                  name="driverid"
+                                  class="form-control" th:field="*{holder.driverId}">
+                            <option value="">-- Driver --</option>
+                            <option th:each="driver : ${listDriver}"
+                                    th:value="${driver.id}"
+                                    th:utext="${driver.driverName}"/>
+                          </select>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('holder.extrafeeId')}? 'has-error':''">
+                          <select id="extrafeeId"
+                                  name="extrafeeid"
+                                  class="form-control" th:field="*{holder.extrafeeId}">
+                            <option value="">-- Extra Fee --</option>
+                            <option th:each="extrafee : ${listExtraFee}"
+                                    th:value="${extrafee.id}"
+                                    th:utext="${extrafee.description}"/>
+                          </select>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('holder.localReceipt')}? 'has-error':''">
+                          <input type="text"
+                                 id="localReceipt"
+                                 name="localreceipt"
+                                 class="form-control"
+                                 th:field="*{holder.localReceipt}"
+                                 autofocus="autofocus"
+                                 placeholder="Local Receipt"/>
+                        </div>
+
+                      </div>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="box">
+                  <div class="box-body">
+                    <div class="box-header">
+                      <div class="col-md-12">
+                        <h3 class="card-title">New Proof Of Delivery Detail's</h3>
+                      </div>
+                    </div>
+                    <div class="box-body">
+                      <div class="col-md-12">
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('holderDetail.qcId')}? 'has-error':''">
+                          <select id="qcId"
+                                  name="qcid"
+                                  class="form-control" th:field="*{holderDetail.qcId}">
+                            <option value="">-- QC --</option>
+                            <option th:each="stuffing : ${listContainerCode}"
+                                    th:value="${stuffing.id}"
+                                    th:utext="${stuffing.containerCode}"/>
+                          </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                          <label class="form-label">Description</label>
+                          <textarea class="form-control address" id="description" name="description"
+                                    placeholder="Description"
+                                    rows="3" required maxlength="200"> </textarea>
+                          <p class="character-count"></p>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('holderDetail.size')}? 'has-error':''">
+                          <input type="size"
+                                 id="size"
+                                 name="size"
+                                 class="form-control"
+                                 th:field="*{holderDetail.size}"
+                                 autofocus="autofocus"
+                                 placeholder="Size"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('holderDetail.img')}? 'has-error':''">
+                          <input type="file"
+                                 id="img"
+                                 name="img"
+                                 class="form-control"
+                                 th:field="*{holderDetail.img}"
+                                 placeholder="Upload Image"/>
+                          <img id="file-preview" style="width: 100%" />
+                      </div>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+
+                </div>
+              </div>
+                <div class="box-footer">
+                  <div class="col-md-6">
+                    <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+                  </div>
+                </div>
+          </form>
+          <!-- /.col -->
+        </div>
+      </div>
+
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <div th:replace="fragments/footerCommon::footer" th:remove="tag"></div>
+</div>
+</body>
+
+</html>
+
+<script>
+  $('#date').datepicker({
+    format: 'dd-M-yyyy'
+  });
+</script>

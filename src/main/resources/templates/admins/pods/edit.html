@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headerCommon :: head">
+  <meta charset="UTF-8">
+  <title>Edit Proof of Detail's</title>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <header th:replace="fragments/mainHeaderCommon::mainHeader" class="main-header">
+  </header>
+  <aside class="main-sidebar">
+    <section class="sidebar" th:replace="fragments/menuCommon::menu"></section>
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+              <div class="col-8 p-15">
+                <h3 class="card-title" th:utext="${pageTitle}"></h3>
+                <h5 class="card-subtitle"><a th:href="@{'/dashboard'}">Dashboard</a> /
+                  <span th:utext="${pageTitle}"></span> /
+                  <span th:utext="${pageSubTitle}"></span>
+                </h5>
+              </div>
+            </div>
+          </div>
+          <form th:action="@{/pod/edit/{id} (id=${pods.id})}" method="POST" th:object="${pods}" role="form">
+            <p class="alert alert-error"
+               th:if="${#fields.hasGlobalErrors()}"
+               th:each="error : ${#fields.errors('global')}"
+               th:text="${error}">Validation error</p>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="box">
+                  <div class="box-body">
+                    <div class="box-header">
+                      <div class="col-md-12">
+                        <h3 class="card-title">Edit Proof of Detail's</h3>
+                      </div>
+                    </div>
+                    <div class="box-body">
+                      <input type="hidden" th:field="*{id}" />
+                      <div class="col-md-12">
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('containerCode')}? 'has-error':''">
+                          <select id="containerCode"
+                                  name="containercode"
+                                  class="form-control" th:field="*{containerCode}">
+                            <option value="">-- Container Code --</option>
+                            <option th:each="stuffing : ${listContainerCode}"
+                                    th:value="${stuffing.id}"
+                                    th:utext="${stuffing.containerCode}"/>
+                          </select>
+
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('receivingNumber')}? 'has-error':''">
+                          <input type="text"
+                                 id="receivingNumber"
+                                 name="receivingnumber"
+                                 class="form-control"
+                                 th:field="*{receivingNumber}"
+                                 autofocus="autofocus"
+                                 placeholder="Receiving Number"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('claim')}? 'has-error':''">
+                          <input type="text"
+                                 id="claim"
+                                 name="claim"
+                                 class="form-control"
+                                 th:field="*{claim}"
+                                 autofocus="autofocus"
+                                 placeholder="Claim"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('qty')}? 'has-error':''">
+                          <input type="text"
+                                 id="qty"
+                                 name="qty"
+                                 class="form-control"
+                                 th:field="*{qty}"
+                                 autofocus="autofocus"
+                                 placeholder="Quantity"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('amount')}? 'has-error':''">
+                          <input type="text"
+                                 id="amount"
+                                 name="amount"
+                                 class="form-control"
+                                 th:field="*{amount}"
+                                 placeholder="Amount"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('price')}? 'has-error':''">
+                          <input type="text"
+                                 id="price"
+                                 name="price"
+                                 class="form-control"
+                                 th:field="*{price}"
+                                 placeholder="Price"/>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('rate')}? 'has-error':''">
+                          <input type="text"
+                                 id="rate"
+                                 name="rate"
+                                 class="form-control"
+                                 th:field="*{rate}"
+                                 placeholder="Rate"/>
+                        </div>
+                        <div class="form-group col-md-12" th:classappend="${#fields.hasErrors('remark')}? 'has-error':''" >
+                          <label class="form-label">Remarks</label>
+                          <textarea class="form-control address" id="remark" name="remark"
+                                    placeholder="Remark"
+                                    th:field="*{remark}"
+                                    rows="3" required maxlength="200"> </textarea>
+                          <p class="character-count"></p>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('files')}? 'has-error':''">
+                          <input type="file"
+                                 id="files"
+                                 name="files"
+                                 class="form-control"
+                                 th:field="*{files}"
+                                 placeholder="Files"/>
+                        </div>
+                        <div class="box-footer">
+                          <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary" id="btnSubmit">Submit</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+
+                </div>
+              </div>
+          </form>
+          <!-- /.col -->
+        </div>
+      </div>
+
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <div th:replace="fragments/footerCommon::footer" th:remove="tag"></div>
+</div>
+</body>
+
+</html>

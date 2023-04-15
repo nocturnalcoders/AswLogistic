@@ -40,7 +40,7 @@ public class LoginController {
     }
 
     @PostMapping
-    public String logIn(@Valid @ModelAttribute("credentials") LoginDto credentials,
+    public String login(@Valid @ModelAttribute("credentials") LoginDto credentials,
                         BindingResult bindingResult,
                         HttpSession session) {
         try {

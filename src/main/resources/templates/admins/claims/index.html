@@ -1,10 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/headerCommon :: head">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Dashboard</title>
 </head>
-<body>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header th:replace="fragments/mainHeaderCommon::mainHeader" class="main-header">
+    </header>
+    <aside class="main-sidebar">
+        <section class="sidebar" th:replace="fragments/menuCommon::menu"></section>
+    </aside>
 
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="alert alert-success" th:if="${status == 'success'}">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                <h4 class="text-success"><i class="fa fa-check-circle"></i> Success!</h4><span th:text="${message}"></span>
+            </div>
+
+            <div class="alert alert-danger" th:if="${status == 'failed'}">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+                <h4 class="text-success"><i class="fa fa-times-circle"></i> Failed!</h4><span th:text="${message}"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <div class="col-8 p-15">
+                                <h3 class="card-title" th:utext="${pageTitle}"></h3>
+                                <h5 class="card-subtitle"><a th:href="@{'/'}">Dashboard</a> /
+                                    <span th:href="@{'/testimonialCategory'}" th:utext="${pageTitle}"></span> /
+                                    <span th:utext="${pageSubTitle}"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body p-15">
+                            <a th:href="@{claim/add}" class="btn btn-success"><span class="fa fa-plus"></span>Add Claim</a>
+                            <hr/>
+                        </div>
+                        <!-- /.box-body -->
+
+                    </div>
+                    <div class="box">
+                        <div class="box-body">
+                            <table id="paginatedTable" class="table table-bordered table-striped">
+
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Container Code</th>
+                                    <th>Receiving Number</th>
+                                    <th>Claim</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Rate</th>
+                                    <th>Amount</th>
+                                    <th>Remarks</th>
+                                    <th>Files</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="list: ${listClaims}">
+                                   <td th:text="${list.id}" />
+                                    <td th:text="${list.containerCode}" />
+                                    <td th:text="${list.receivingNumber}" />
+                                    <td th:text="${list.claim}" />
+                                    <td th:text="${list.qty}" />
+                                    <td th:text="${list.price}" />
+                                    <td th:text="${list.rate}" />
+                                    <td th:text="${list.amount}" />
+                                    <td th:text="${list.remark}" />
+                                    <td th:text="${list.files}" />
+                                    <td>
+                                        <a th:href="@{/claim/edit/{id}(id=${list.id})}" class="btn btn-info">Update</a>
+                                        <a th:href="@{/claim/delete/{id}(id=${list.id})}" class="btn btn-danger ml-2">Delete</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <div th:replace="fragments/footerCommon::footer" th:remove="tag"></div>
+</div>
+
+<!-- DataTables -->
+<script th:src="@{/assets/plugins/datatables/jquery.dataTables.min.js}" src="../../static/plugins/datatables/jquery.dataTables.min.js"></script>
+<script th:src="@{/assets/plugins/datatables/dataTables.bootstrap.min.js}" src="../../static/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script th:src="@{/assets/js/clipboard/clipboard.min.js}" src="../../static/assets/js/clipboard/clipboard.min.js"></script>
+<script th:src="@{/assets/plugins/slimScroll/jquery.slimscroll.min.js}" src="../../static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script th:src="@{/assets/plugins/fastclick/fastclick.js}" src="../../static/plugins/fastclick/fastclick.js"></script>
 </body>
 </html>
+
+<script>
+    $(document).ready(function() {
+        $("#paginatedTable").DataTable({
+            scrollX: true,
+            'aoColumnDefs': [{
+                'bSortable': false,
+                'aTargets': [-1] /* 1st one, start by the right */
+            }]
+        });
+    })
+
+</script>

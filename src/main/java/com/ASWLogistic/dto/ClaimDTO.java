@@ -1,33 +1,21 @@
 package com.ASWLogistic.dto;
 
-import com.ASWLogistic.model.User;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.*;
+import lombok.experimental.Accessors;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
-public class ClaimDto {
-    private Long id;
-
+@Accessors(chain = true)
+public class ClaimDTO {
     private String containerCode;
-
     private String receivingNumber;
-
     private String claim;
-
     private String qty;
-
     private String price;
-
     private String rate;
-
     private String amount;
-
     private String remark;
-
-    private String files;
-
-    private User userId;
+    private MultipartFile files;
 }

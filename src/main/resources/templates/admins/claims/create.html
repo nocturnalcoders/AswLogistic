@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="fragments/headerCommon :: head">
   <meta charset="UTF-8">
   <title>Add Claim</title>
@@ -30,7 +29,7 @@
               </div>
             </div>
           </div>
-          <form th:action="@{/admin/student/add}" method="POST" th:object="${holder}" role="form">
+          <form th:action="@{/claim/add}" method="POST" th:object="${holder}" role="form" enctype="multipart/form-data">
             <p class="alert alert-error"
                th:if="${#fields.hasGlobalErrors()}"
                th:each="error : ${#fields.errors('global')}"
@@ -46,64 +45,83 @@
                     </div>
                     <div class="box-body">
                       <div class="col-md-12">
-                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('firstName')}? 'has-error':''">
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('containerCode')}? 'has-error':''">
+                            <select id="containerCode"
+                                    name="containercode"
+                                    class="form-control" th:field="*{containerCode}">
+                              <option value="">-- Container Code --</option>
+                                <option th:each="stuffing : ${listContainerCode}"
+                                      th:value="${stuffing.containerCode}"
+                                      th:utext="${stuffing.containerCode}"/>
+                            </select>
+
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('receivingNumber')}? 'has-error':''">
                           <input type="text"
-                                 id="firstName"
-                                 name="firstname"
+                                 id="receivingNumber"
+                                 name="receivingnumber"
                                  class="form-control"
-                                 th:field="*{firstName}"
+                                 th:field="*{receivingNumber}"
                                  autofocus="autofocus"
-                                 placeholder="First Name"/>
+                                 placeholder="Receiving Number"/>
                         </div>
-                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('lastName')}? 'has-error':''">
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('claim')}? 'has-error':''">
                           <input type="text"
-                                 id="lastName"
-                                 name="lastname"
+                                 id="claim"
+                                 name="claim"
                                  class="form-control"
-                                 th:field="*{lastName}"
+                                 th:field="*{claim}"
                                  autofocus="autofocus"
-                                 placeholder="Last Name"/>
+                                 placeholder="Claim"/>
                         </div>
-                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('email')}? 'has-error':''">
-                          <input type="email"
-                                 id="email"
-                                 name="email"
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('qty')}? 'has-error':''">
+                          <input type="text"
+                                 id="qty"
+                                 name="qty"
                                  class="form-control"
-                                 th:field="*{email}"
+                                 th:field="*{qty}"
                                  autofocus="autofocus"
-                                 placeholder="E-mail"/>
+                                 placeholder="Quantity"/>
                         </div>
-                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('confirmEmail')}? 'has-error':''">
-                          <input type="email"
-                                 id="confirmEmail"
-                                 name="confirmEmail"
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('amount')}? 'has-error':''">
+                          <input type="text"
+                                 id="amount"
+                                 name="amount"
                                  class="form-control"
-                                 th:field="*{confirmEmail}"
-                                 autofocus="autofocus"
-                                 placeholder="Confirm E-mail"/>
+                                 th:field="*{amount}"
+                                 placeholder="Amount"/>
                         </div>
-                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('password')}? 'has-error':''">
-                          <input type="password"
-                                 id="password"
-                                 name="password"
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('price')}? 'has-error':''">
+                          <input type="text"
+                                 id="price"
+                                 name="price"
                                  class="form-control"
-                                 th:field="*{password}"
-                                 placeholder="Password"/>
+                                 th:field="*{price}"
+                                 placeholder="Price"/>
                         </div>
-                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('confirmPassword')}? 'has-error':''">
-                          <input type="password"
-                                 id="confirmPassword"
-                                 name="confirmPassword"
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('rate')}? 'has-error':''">
+                          <input type="text"
+                                 id="rate"
+                                 name="rate"
                                  class="form-control"
-                                 th:field="*{confirmPassword}"
-                                 placeholder="Confirm Password"/>
+                                 th:field="*{rate}"
+                                 placeholder="Rate"/>
                         </div>
                         <div class="form-group col-md-12">
-                          <label class="form-label">Address</label>
-                          <textarea class="form-control address" id="address" name="address"
-                                    placeholder="Student Address"
-                                    rows="3" required maxlength="113"> </textarea>
+                          <label class="form-label">Remarks</label>
+                          <textarea class="form-control address" id="remark" name="remark"
+                                    placeholder="Remark"
+                                    rows="3" required maxlength="200"> </textarea>
                           <p class="character-count"></p>
+                        </div>
+                        <div class="form-group has-feedback col-md-12" th:classappend="${#fields.hasErrors('files')}? 'has-error':''">
+                          <input type="file"
+                                 id="files"
+                                 name="files"
+                                 class="form-control"
+                                 th:field="*{files}"
+                                 placeholder="Files"/>
+                          <img id="file-preview" style="width: 100%" />
                         </div>
                         <div class="box-footer">
                           <div class="col-md-6">
@@ -132,3 +150,17 @@
 </body>
 
 </html>
+
+<script>
+  $(function() {
+    // When the file input changes
+    $('#files').on('change', function() {
+      // Get the file
+      var file = this.files[0];
+      // Create a URL for the file
+      var url = URL.createObjectURL(file);
+      // Set the URL as the preview image source
+      $('#file-preview').attr('src', url);
+    });
+  });
+</script>

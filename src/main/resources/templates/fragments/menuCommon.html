@@ -10,12 +10,23 @@
     <!-- Sidebar Menu -->
     <ul class="sidebar-menu">
         <li class="" th:classappend="${activeMenu eq 'home'} ? 'active':''"><a th:href="@{/}" href="#"><i class="fa fa-home"></i> <span>Home</span></a></li>
-
+        <!--    MASTER DATA    -->
 		<li th:if="${session.role.equals('ROLE_ADMIN')}" class="header">Data</li>
-        <li th:if="${session.role.equals('ROLE_ADMIN')}" class="" th:classappend="${activeMenu eq 'admins/students'}? 'active':''"><a th:href="@{/admin/student}" href="#"><i class="fa fa-file"></i> <span>Claims</span></a></li>
-        <li th:if="${session.role.equals('ROLE_ADMIN')}" class="" th:classappend="${activeMenu eq 'admins/teachers'}? 'active':''"><a th:href="@{/admin/teacher}" href="#"><i class="fa fa-file"></i> <span>Travel Permit</span></a></li>
+        <li th:if="${session.role.equals('ROLE_ADMIN')}" class="" th:classappend="${activeMenu eq 'admins/claims'}? 'active':''"><a th:href="@{/claim}" href="#"><i class="fa fa-file"></i> <span>Claims</span></a></li>
+        <li th:if="${session.role.equals('ROLE_ADMIN')}" class="" th:classappend="${activeMenu eq 'admins/pods'}? 'active':''"><a th:href="@{/pod}" href="#"><i class="fa fa-file"></i> <span>Proof of Delivery<Delivery></Delivery></span></a></li>
+        <li th:if="${session.role.equals('ROLE_ADMIN')}" class="" th:classappend="${activeMenu eq 'admins/stuffing'}? 'active':''"><a th:href="@{/stuffing}" href="#"><i class="fa fa-shopping-cart"></i> <span>Stuffing</span></a></li>
+        <li th:if="${session.role.equals('ROLE_ADMIN')}" class="" th:classappend="${activeMenu eq 'admins/customer'}? 'active':''"><a th:href="@{/customer}" href="#"><i class="fa fa-user-plus"></i> <span>Customer</span></a></li>
 
-        <li th:if="${session.role.equals('ROLE_ADMIN') || session.role.equals('ROLE_STUDENT')}" class="header">Schedule</li>
+        <!--    FINANCE        -->
+        <li th:if="${session.role.equals('ROLE_ADMIN')}" class="header">Finance</li>
+        <li th:if="${session.role.equals('ROLE_ADMIN')}" class="" th:classappend="${activeMenu eq 'admins/invoices'}? 'active':''"><a th:href="@{/invoice}" href="#"><i class="fa fa-bank"></i> <span>Invoice</span></a></li>
+        <li th:if="${session.role.equals('ROLE_ADMIN')}" class="" th:classappend="${activeMenu eq 'admins/payments'}? 'active':''"><a th:href="@{/payment}" href="#"><i class="fa fa-bank"></i> <span>Payment</span></a></li>
+        <li th:if="${session.role.equals('ROLE_ADMIN')}" class="" th:classappend="${activeMenu eq 'admins/extrafees'}? 'active':''"><a th:href="@{/extrafee}" href="#"><i class="fa fa-bank"></i> <span>Extra Fee</span></a></li>
+        <li th:if="${session.role.equals('ROLE_ADMIN')}" class="" th:classappend="${activeMenu eq 'admins/cardPayments'}? 'active':''"><a th:href="@{/cardPayment}" href="#"><i class="fa fa-credit-card"></i> <span>Card Payment</span></a></li>
+        <li th:if="${session.role.equals('ROLE_ADMIN')}" class="" th:classappend="${activeMenu eq 'admins/cardPaymentTypes'}? 'active':''"><a th:href="@{/cardPaymentType}" href="#"><i class="fa fa-credit-card"></i> <span>Card Payment Type</span></a></li>
+
+        <!--    OTHER          -->
+        <li th:if="${session.role.equals('ROLE_ADMIN') || session.role.equals('ROLE_STUDENT')}" class="header">Other</li>
         <!-- <li th:if="${#authorization.expression('hasRole(''MARKETING'')')}" class="" th:classappend="${activeMenu eq 'banner'}? 'active':''"><a th:href="@{/banner}" href="#"><i class="fa fa-image"></i> <span>Testimonial Banner</span></a></li>
          -->
         <!-- <li th:if="${#authorization.expression('hasRole(''MARKETING'')')}" class="" th:classappend="${activeMenu eq 'love_letter'} ? 'active':''"><a th:href="@{/love-letter}" href="#"><i class="fa fa-heart"></i> <span>Love Letter</span></a></li> -->
